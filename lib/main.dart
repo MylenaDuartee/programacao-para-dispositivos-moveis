@@ -14,17 +14,25 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Meu App',
       theme: ThemeData(
-        colorScheme: .fromSeed(seedColor: Colors.pinkAccent),
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.pink.shade100),
       ),
-      home: const MyHomePage(title: 'Home'),
+      home: MyHomePage(title: 'Home'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+
+  MyHomePage({super.key, required this.title})
+      : items = [
+          Item(nome: "Arroz", chek: true),
+          Item(nome: "Feijão", chek: true),
+          Item(nome: "Carne", chek: true),
+        ];
 
   final String title;
+  final List<Item> items;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -37,10 +45,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       appBar: AppBar(
-
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-
-        title: Text('App Bar'),
+        backgroundColor: Colors.pink.shade100,
+        title: Text('Home'),
+        actions: <Widget>[
+          Icon(Icons.local_grocery_store),
+        ],
       ),
       drawer: Drawer(
         child: ListView(
@@ -60,11 +69,21 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      body: Center(
-      child: Container(
-          child: Text('Hello World'),
-        ),
-      ),
+      body: ListView.builder(
+       itemCount: widget.items.length,
+       itemBuilder: (BuildContext context,int index) {
+        final item = widget.items[index];
+        return CheckboxListTile(
+           title: Text(item.nome),
+           key: Key(item.nome),
+           value: item.chek,
+           onChanged: (value) {
+            setState(() {
+              item.chek = value!;
+            });
+           },
+          );
+       }),
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(
@@ -76,4 +95,14 @@ class _MyHomePageState extends State<MyHomePage> {
       ]),
     );
   }
+}
+
+class Item {
+  String nome;
+  bool chek;
+
+  Item({
+    required this.nome,
+    required this.chek
+    });
 }
