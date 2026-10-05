@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
       home: MyHomePage(title: 'Home'),
       routes: {
         '/settings': (context) => const SecondRoute(),
+        '/abastecer': (context) => AbastecerRoute(),
       },
     );
   }
@@ -36,10 +37,14 @@ class MyHomePage extends StatefulWidget {
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
+
+  
 }
 
 class _MyHomePageState extends State<MyHomePage> {
   final TextEditingController controller = TextEditingController();
+    double resultado = 0;
+
   @override
   Widget build(BuildContext context) {
 
@@ -132,11 +137,16 @@ class _MyHomePageState extends State<MyHomePage> {
             icon: Icon(Icons.home),
             label: 'Home',
           ),
+          BottomNavigationBarItem(icon: Icon(Icons.local_gas_station),
+          label: 'Abastecer'),
           BottomNavigationBarItem(icon: Icon(Icons.settings),
           label: 'Settings'),
         ],
         onTap: (index){
-          if(index == 1){
+          if(index == 1) {
+            Navigator.pushNamed(context, '/abastecer');
+          }
+          if(index == 2){
             Navigator.pushNamed(context, '/settings');          
           }
         },
@@ -161,6 +171,103 @@ class SecondRoute extends StatelessWidget {
           },
           child: const Text('Voltar'),
         ),
+      ),
+    );
+  }
+}
+
+class AbastecerRoute extends StatefulWidget {
+  AbastecerRoute({super.key});
+
+  @override
+  State<AbastecerRoute> createState() => _AbastecerRouteState();
+}
+
+class _AbastecerRouteState extends State<AbastecerRoute> {
+  String resultadoText = '';
+  final TextEditingController _textEditeControllerGasolina =
+      TextEditingController();
+
+  final TextEditingController _textEditeControllerAlcool =
+      TextEditingController();
+
+  void resulta(double gasolina, double alcool) {
+    double resultado = alcool / gasolina * 100;
+    setState(() {
+      if (resultado >= 70) {
+        resultadoText = 'Abasteça com alcool';
+      } else {
+        resultadoText = 'Abasteça com gasolina';
+      }
+      
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Abastecer'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: .center,
+          children: [
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child:Column(
+                children: [
+                  Image.network(
+                    'https://cdn-icons-png.flaticon.com/512/99/99729.png',
+                    width: 200,
+                  ),
+                  SizedBox(height: 15),
+                  TextField(
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    border:  OutlineInputBorder(),
+                    labelText: 'Valor gasolina',
+                    ),
+                  controller: _textEditeControllerGasolina,
+                ),
+                SizedBox(height: 15),
+                TextField(
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    border:  OutlineInputBorder(),
+                    labelText: 'Valor alcool',
+                    ),
+                  controller: _textEditeControllerAlcool,
+                ),
+                SizedBox(height: 15),
+                ElevatedButton(
+                  onPressed: () {
+                    double gasolina = double.parse(_textEditeControllerGasolina.text);
+
+                    double alcool = double.parse(_textEditeControllerAlcool.text);
+
+                    resulta(gasolina,alcool);
+                  },
+
+
+                  child: Text('Calcular'),
+                ),
+                SizedBox(height: 15),
+                Text(resultadoText),
+
+                ],
+              )
+              
+            )
+          ],
+        )
+
+        /*child: Container(
+          margin: const EdgeInsets.all(10.0),
+          color: Colors.amber[600],
+          width: 48.0,
+          height: 48.0,
+        ),*/
       ),
     );
   }
