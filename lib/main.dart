@@ -177,7 +177,7 @@ class SecondRoute extends StatelessWidget {
 }
 
 class AbastecerRoute extends StatefulWidget {
-  AbastecerRoute({super.key});
+  const AbastecerRoute({super.key});
 
   @override
   State<AbastecerRoute> createState() => _AbastecerRouteState();
@@ -194,7 +194,7 @@ class _AbastecerRouteState extends State<AbastecerRoute> {
   void resulta(double gasolina, double alcool) {
     double resultado = alcool / gasolina * 100;
     setState(() {
-      if (resultado >= 70) {
+      if (resultado <= 70) {
         resultadoText = 'Abasteça com alcool';
       } else {
         resultadoText = 'Abasteça com gasolina';
@@ -207,9 +207,11 @@ class _AbastecerRouteState extends State<AbastecerRoute> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Abastecer'),
+        backgroundColor: Colors.pink.shade100,
+        title: const Text('Gasolina x Alcool'),
       ),
       body: Center(
+        child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: .center,
           children: [
@@ -217,9 +219,15 @@ class _AbastecerRouteState extends State<AbastecerRoute> {
               padding: EdgeInsets.symmetric(horizontal: 20),
               child:Column(
                 children: [
+                  Text('Gasolina x Alcool',
+                    style: TextStyle(
+                      fontSize:20,
+                    ),
+                  ),
+                  SizedBox(height: 15),
                   Image.network(
-                    'https://cdn-icons-png.flaticon.com/512/99/99729.png',
-                    width: 200,
+                    'https://www.c-store.com.au/wp-content/uploads/2018/09/iStock-504743184.jpg?w=1024',
+
                   ),
                   SizedBox(height: 15),
                   TextField(
@@ -260,6 +268,7 @@ class _AbastecerRouteState extends State<AbastecerRoute> {
               
             )
           ],
+        )
         )
 
         /*child: Container(
