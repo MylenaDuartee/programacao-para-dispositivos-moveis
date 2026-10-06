@@ -195,7 +195,7 @@ class _AbastecerRouteState extends State<AbastecerRoute> {
     double resultado = alcool / gasolina * 100;
     setState(() {
       if (resultado <= 70) {
-        resultadoText = 'Abasteça com alcool';
+        resultadoText = 'Abasteça com álcool';
       } else {
         resultadoText = 'Abasteça com gasolina';
       }
@@ -208,7 +208,7 @@ class _AbastecerRouteState extends State<AbastecerRoute> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.pink.shade100,
-        title: const Text('Gasolina x Alcool'),
+        title: const Text('Gasolina x Álcool'),
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -219,7 +219,7 @@ class _AbastecerRouteState extends State<AbastecerRoute> {
               padding: EdgeInsets.symmetric(horizontal: 20),
               child:Column(
                 children: [
-                  Text('Gasolina x Alcool',
+                  Text('Gasolina x Álcool',
                     style: TextStyle(
                       fontSize:20,
                     ),
@@ -243,7 +243,7 @@ class _AbastecerRouteState extends State<AbastecerRoute> {
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     border:  OutlineInputBorder(),
-                    labelText: 'Valor alcool',
+                    labelText: 'Valor álcool',
                     ),
                   controller: _textEditeControllerAlcool,
                 ),
@@ -270,13 +270,6 @@ class _AbastecerRouteState extends State<AbastecerRoute> {
           ],
         )
         )
-
-        /*child: Container(
-          margin: const EdgeInsets.all(10.0),
-          color: Colors.amber[600],
-          width: 48.0,
-          height: 48.0,
-        ),*/
       ),
     );
   }
